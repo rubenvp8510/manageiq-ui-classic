@@ -163,6 +163,10 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     }
   };
 
+  vm.enableAddProperty = function() {
+    return !!vm.step3DsModel.dsAddPropertyName || !!vm.step3DsModel.dsAddPropertyName;
+  };
+
   vm.addDatasourceStep2Back = function() {
     vm.dsModel.step = 'STEP1';
   };

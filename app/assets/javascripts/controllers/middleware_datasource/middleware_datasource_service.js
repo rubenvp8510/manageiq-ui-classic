@@ -140,7 +140,7 @@ function MwAddDatasourceService($http, $q) {
   };
 
   self.isXaDriver = function(driver) {
-    return driver.hasOwnProperty('xaDsClass') && driver.xaDsClass !== '';
+    return driver.hasOwnProperty('xaDsClass') && !!driver.xaDsClass;
   };
 
   self.determineConnectionUrl = function(dsSelection) {
