@@ -6,6 +6,13 @@ MwAddDatasourceCtrl.$inject = ['$scope', '$rootScope', 'miqService', 'mwAddDatas
 
 function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceService) {
   var vm = this;
+  var dsPropsHash = function(dsProps){
+    var propsHash = {};
+    dsProps.forEach(function(prop) {
+      propsHash[prop.name] = prop.value;
+    });
+    return propsHash;
+  };
   var makePayload = function() {
     return {
       'id': angular.element('#server_id').val(),
@@ -14,7 +21,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
       'jndiName': vm.step1DsModel.jndiName,
       'driverName': vm.step2DsModel.jdbcDriverName,
       'driverClass': vm.step2DsModel.driverClass,
-      'datasourceProperties': vm.step3DsModel.dsProps,
+      'datasourceProperties': dsPropsHash(vm.step3DsModel.dsProps),
       'connectionUrl': vm.step3DsModel.connectionUrl,
       'userName': vm.step3DsModel.userName,
       'password': vm.step3DsModel.password,
@@ -67,7 +74,6 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
           driverClass: '',
         });
     }
-
     mwAddDatasourceService.sendAddDatasource(payload).then(
       function(result) { // success
         miqService.miqFlash(result.data.status, result.data.msg);
@@ -178,6 +184,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
   };
 
   vm.finishAddDatasourceBack = function() {
+    vm.step3DsModel.dsProps = [];
     vm.dsModel.step = 'STEP2';
   };
 
